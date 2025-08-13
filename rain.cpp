@@ -3,10 +3,11 @@
 //github:3174378573xiao
 //qq:3174378573
 
-//#define DEBUG
+#define DEBUG
 
 //rain语言编译器的入口处
 #include<iostream>
+#include<fstream>
 #include<string>
 #include "Debug.h"//关于调试输出的内容 需要 c++17
 using namespace std;
@@ -35,14 +36,15 @@ int main(int argc, char* argv[]) {
 		//通过参数首字符判断模式
 		if (argv[1][0] == '-') {
 			//帮助模式
-			debug_log << "当前模式：帮助模式" <<strcmp(argv[1] ,"-help")<< endl;
+			debug_log << "当前模式：帮助模式" << strcmp(argv[1], "-help") << endl;
 			//string temp = argv[1];
-			if (!strcmp(argv[1] ,"-help")) {
+			if (!strcmp(argv[1], "-help")) {
 				//帮助
 				cout << "输入 rain 进入交互模式" << endl;
 				cout << "输入 rain [需编译的文件] 进入编译模式" << endl;
 				cout << "输入 rain -about 了解更多(无用)信息" << endl;
-			}else if(!strcmp(argv[1], "-about")){
+			}
+			else if (!strcmp(argv[1], "-about")) {
 				//关于
 				cout << "这是rain语言的编译器" << endl;
 				cout << "作者：xiao" << endl;
@@ -56,6 +58,18 @@ int main(int argc, char* argv[]) {
 		else {
 			//编译模式
 			debug_log << "当前模式：编译模式" << endl;
+
+			//读取文件
+			fstream file;
+			file.open(argv[1], ios::in);
+			if (!file.is_open())cout << "[错误]无法打开文件:" << argv[1] << endl;
+			else {
+				string source((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+				debug_log << string(20, '-') << endl;
+				debug_log << source << endl;
+				debug_log << string(20, '-') << endl;
+				file.close();
+			}
 
 			//TODO
 		}
