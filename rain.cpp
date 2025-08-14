@@ -10,6 +10,7 @@
 #include<fstream>
 #include<string>
 #include "Debug.h"//关于调试输出的内容 需要 c++17
+#include "Scanner.h"
 using namespace std;
 
 //argc 传入参数的数量，argv传入参数的数组
@@ -65,6 +66,9 @@ int main(int argc, char* argv[]) {
 			if (!file.is_open())cout << "[错误]无法打开文件:" << argv[1] << endl;
 			else {
 				string source((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+				
+				Scanner scanner(source);
+
 				debug_log << string(20, '-') << endl;
 				debug_log << source << endl;
 				debug_log << string(20, '-') << endl;
